@@ -1,1 +1,43 @@
-index
+<div class="container">
+	<h1 id="header">Eat. That. Burger !!!!</h1>
+
+<div class="row">
+	<img id="photo" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTkhrHbYX3Zqo5i4TJejgq3baT28lrd8lZr2F-g4BngtK-q8YqZLA"/>
+</div>
+<!-- this is index.handlebars -->
+<ul>
+  {{#each burgers}}
+  	{{#unless devoured}}
+
+	  {{!-- add and if devoured equals false --}}
+	  	<li>
+	  		<p><span class="label">ID:</span> {{this.id}} {{this.burger_name}} {{this.devoured}}   </p>
+	      
+		    <form action="/update/{{this.id}}?_method=PUT" method="POST">
+		        <input type="hidden" name="id" value="{{this.id}}">
+		        <button type="submit">Devour it</button>
+	      	</form>
+	  	</li>
+	{{/unless}}
+	{{#if devoured}}
+		<li>
+			<p><span class="label">ID:</span> {{this.id}} {{this.burger_name}} {{this.devoured}}   </p>
+		</li>
+	{{/if}}
+  {{/each}}
+</ul>
+
+{{!-- add another list for being devoured equal true --}}
+
+<h2>Add a Quote</h2>
+
+<form class="create-form" action="/create" method="POST">
+
+  <div class="form-group">
+    <label for="quo"></label>
+    <textarea id="quo" name="type" rows="8" cols="40"></textarea>
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+</div>
