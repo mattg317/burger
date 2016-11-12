@@ -1,11 +1,9 @@
 var express = require('express');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
-var exphbs = require("express-handlebars");
+
 
 var app = express();
-
-//var orm = require('./config/orm.js');
 
 // Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static(process.cwd() + '/public'));
@@ -15,17 +13,17 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(methodOverride('_method'));
-// override with POST having ?_method=DELETE
-// app.use(method_override('_method'));
-// var exphbs = require('express-handlebars');
-// app.engine('handlebars', exphbs({
-// 	defaultLayout: 'main'
-// }));
-// app.set('view engine', 'handlebars');
+var exphbs = require('express-handlebars');
+app.engine('handlebars', exphbs({
+	defaultLayout: 'main'
+}));
+app.set('view engine', 'handlebars');
 
-// orm.selectAll('burgers');
-//orm.insertOne("fancy", false);
-//orm.updateOne('burgers', "Fancy", true, 1)
+var routes = require('./controllers/burger_controller.js');
+app.use('/', routes);
+
+var port = 3000;
+app.listen(port);
 
 
 //Routes eventually=========================
@@ -33,29 +31,31 @@ app.use(methodOverride('_method'));
 //app.use('/', routes);
 
 //mysql for now===========================
-var mysql = require('mysql');
+// var mysql = require('mysql');
 
-var connection = mysql.createConnection({
+// var connection = mysql.createConnection({
+/
 
-});
-
-
-
-
-connection.connect(function(err){
-	if (err){
-		console.log('error connecting; '+err.stack);
-		return;
-	}
-	console.log('connect as id '+ connection.threadId);
-})
+// });
 
 
+
+
+// connection.connect(function(err){
+// 	if (err){
+// 		console.log('error connecting; '+err.stack);
+// 		return;
+// 	}
+// 	console.log('connect as id '+ connection.threadId);
+// })
+
+/*
 //Get Handle Bars working=======================================
 var exphbs = require('express-handlebars');
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 
 app.set("view engine", "handlebars");
+
 
 app.get('/', function(req, res){
 	connection.query("SELECT * FROM burgers;", function(err, data){
@@ -86,3 +86,4 @@ var PORT = process.env.PORT || 3000;
 app.listen(PORT, function(){
 	console.log("Now listening to you live on: ", PORT);
 });
+*/

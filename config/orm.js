@@ -1,50 +1,28 @@
 
 var connection = require('./connection.js')
 
-// function selectAll(){
-
-// 	connection.query("SELECT * FROM burgers", function(err, result){
-// 		console.log(result);
-// 		return result;
-// 	})
-// }
-
-// function insertOne(){
-
-// 	conneciton.query("INSERT INTO burgers VALUES ?", function(err, result){
-// 		console.log(result);
-// 		return result;
-// 	}
-// }
-
-// function updateOne(){
-
-// 	connection.query('UPDATE burgers SET ? WHERE', function(err, reult){
-// 		console.log(result);
-// 		return result
-// 	})
-// }
 
 var orm ={
-	selectAll: function(tableInput, callback) {
-		var queryString = "SELECT * FROM "+ tableInput;
+	selectAll: function(cb) {
+		var queryString = "SELECT * FROM burgers";
 		connection.query(queryString, function(err, result){
-			console.log(result);
-			callback(result);
-		})
+			if(err) throw err;
+			cb(result)
+		});
 	},
-	insertOne: function(name, dev){
-		var queryString = "INSERT INTO burgers(burger_name, devoured) VALUES ('"+name+"',"+dev+")";
-		console.log(queryString);
+	insertOne: function(name, dev, cb){
+		var queryString = "INSERT INTO burgers(burger_name, devoured) VALUES (?, ?)";
+		
 		connection.query(queryString, [name, dev], function (err, result){
-			console.log(result);
+			cb(result);
 		})
 	},
-	updateOne: function(tableInput, name, dev, id){
-		var queryString= "UPDATE "+tableInput+ " SET burger_name= '"+name+"', devoured= "+ dev + " WHERE id= "+id;
-		console.log(queryString);
-		connection.query(queryString, function(err, result){
-			console.log(result);
+	updateOne: function(id, cb){
+		var queryString= "UPDATE burgers SET devoured = true WHERE id = ?";
+		
+
+		connection.query(queryString, [id],  function(err, result){
+			cb(result)
 		})
 	}
 }

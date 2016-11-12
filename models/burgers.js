@@ -1,18 +1,27 @@
 var orm = require('../config/orm');
 
-orm.selectAll('burgers');
-//orm.insertOne("fancy", false);
-//orm.updateOne('burgers', "Fancy", true, 1)
 
-//module.exports = burgers.js;
 
 var burgers ={
-	selectAll: function(callback){
-		orm.selectAll("burgers", function(res){
-			callback(res)
+	selectAll: function(cb){
+		orm.selectAll(function(res){
+			cb(res)
+		});
+	},
+
+	insertOne: function(name, dev, cb){
+		orm.insertOne(name, dev, function(res){
+			cb(res);
+		});
+	},
+
+	updateOne: function(id, cb){
+		orm.updateOne(id, function(res){
+			console.log('here'+res);
+			cb(res);
 		})
 	}
 
-}
+};
 
 module.exports = burgers;
