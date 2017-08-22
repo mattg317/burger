@@ -1,7 +1,7 @@
 
 var connection = require('./connection.js')
 
-
+// This is an object relational map
 var orm ={
 	selectAll: function(cb) {
 		var queryString = "SELECT * FROM burgers";
